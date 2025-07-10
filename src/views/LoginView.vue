@@ -1,0 +1,179 @@
+<template>
+  <div class="login-container">
+    <div class="login-card">
+      <RouterLink to="/" class="back-link">
+        ← Kembali ke Home
+      </RouterLink>
+      <h1 class="login-title">Eventure Login</h1>
+      <form @submit.prevent="handleLogin">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            v-model="credentials.username"
+            type="text"
+            required
+            placeholder="Masukkan username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            v-model="credentials.password"
+            type="password"
+            required
+            placeholder="Masukkan password"
+          />
+        </div>
+        <div v-if="error" class="error-message">
+          {{ error }}
+        </div>
+        <button type="submit" class="login-button" :disabled="loading">
+          {{ loading ? 'Loading...' : 'Login' }}
+        </button>
+      </form>
+      <div class="demo-accounts">
+        <p>Demo Accounts:</p>
+        <ul>
+          <li>Admin: admin / admin123</li>
+          <li>Panitia: panitia01 / panitia123</li>
+          <li>Peserta: peserta01 / peserta123</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const credentials = ref({
+  username: '',
+  password: ''
+})
+const loading = ref(false)
+const error = ref('')
+
+const handleLogin = async () => {
+  loading.value = true
+  error.value = ''
+  
+  const result = await authStore.login(credentials.value)
+  
+  if (result.success) {
+    router.push('/dashboard')
+  } else {
+    error.value = result.error
+  }
+  
+  loading.value = false
+}
+</script>
+
+<style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #2980b9;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.demo-accounts {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.demo-accounts ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.demo-accounts li {
+  margin-bottom: 0.25rem;
+}
+</style>

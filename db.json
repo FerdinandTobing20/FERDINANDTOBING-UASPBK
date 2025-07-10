@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Administrator",
+      "email": "admin@eventure.com"
+    },
+    {
+      "id": "2",
+      "username": "panitia01",
+      "password": "panitia123",
+      "role": "panitia",
+      "name": "Panitia Satu",
+      "email": "panitia1@eventure.com"
+    },
+    {
+      "id": "3",
+      "username": "peserta01",
+      "password": "peserta123",
+      "role": "peserta",
+      "name": "Peserta Satu",
+      "email": "peserta1@eventure.com"
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "title": "Workshop Vue.js",
+      "description": "Belajar Vue.js dari dasar hingga mahir",
+      "date": "2025-02-15",
+      "time": "09:00",
+      "location": "Ruang Meeting A",
+      "capacity": 30,
+      "status": "active"
+    }
+  ],
+  "registrations": [
+    {
+      "id": "1",
+      "eventId": 1,
+      "userId": 3,
+      "registrationDate": "2025-01-20T10:00:00",
+      "status": "registered",
+      "attended": true
+    }
+  ]
+}

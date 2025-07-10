@@ -194,10 +194,29 @@
             </div>
           </div>
           <div class="about-visual">
-            <div class="visual-box">
-              <div class="rotating-card">
-                <div class="card-face card-front">Event Management</div>
-                <div class="card-face card-back">Made Simple</div>
+            <div class="visual-container">
+              <div class="feature-showcase">
+                <div class="showcase-item">
+                  <div class="showcase-icon">📱</div>
+                  <span>Mobile Friendly</span>
+                </div>
+                <div class="showcase-item">
+                  <div class="showcase-icon">⚡</div>
+                  <span>Real-time Updates</span>
+                </div>
+                <div class="showcase-item">
+                  <div class="showcase-icon">🎯</div>
+                  <span>Easy to Use</span>
+                </div>
+                <div class="showcase-item">
+                  <div class="showcase-icon">🔧</div>
+                  <span>Customizable</span>
+                </div>
+              </div>
+              <div class="visual-decoration">
+                <div class="decoration-circle circle-1"></div>
+                <div class="decoration-circle circle-2"></div>
+                <div class="decoration-circle circle-3"></div>
               </div>
             </div>
           </div>
@@ -633,49 +652,120 @@ onUnmounted(() => {
   align-items: center;
 }
 
-.visual-box {
-  width: 300px;
-  height: 300px;
-  perspective: 1000px;
-}
-
-.rotating-card {
-  width: 100%;
-  height: 100%;
+.visual-container {
   position: relative;
-  transform-style: preserve-3d;
-  animation: rotate 8s infinite linear;
+  width: 400px;
+  height: 400px;
 }
 
-.card-face {
-  position: absolute;
+.feature-showcase {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.showcase-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  animation: slideIn 0.8s ease-out;
+}
+
+.showcase-item:nth-child(1) { animation-delay: 0.1s; }
+.showcase-item:nth-child(2) { animation-delay: 0.2s; }
+.showcase-item:nth-child(3) { animation-delay: 0.3s; }
+.showcase-item:nth-child(4) { animation-delay: 0.4s; }
+
+.showcase-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 30px rgba(52, 152, 219, 0.3);
+}
+
+.showcase-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  border-radius: 20px;
-  backface-visibility: hidden;
-}
-
-.card-front {
   background: linear-gradient(135deg, #3498db, #2980b9);
+  border-radius: 50%;
+  color: white;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
-.card-back {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  transform: rotateY(180deg);
+.visual-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
 }
 
-@keyframes rotate {
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 80px;
+  height: 80px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.circle-3 {
+  width: 60px;
+  height: 60px;
+  bottom: 15%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+@keyframes slideIn {
   from {
-    transform: rotateY(0deg);
+    opacity: 0;
+    transform: translateX(-50px);
   }
   to {
-    transform: rotateY(360deg);
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.1;
   }
 }
 
@@ -773,8 +863,14 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
   
-  .about-visual {
-    display: none;
+  .visual-container {
+    width: 100%;
+    height: 300px;
+  }
+  
+  .showcase-item {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
   
   .features-grid {
@@ -783,6 +879,11 @@ onUnmounted(() => {
   
   .nav-links {
     display: none;
+  }
+  
+  .stats {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 </style>
